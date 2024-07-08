@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-extended": "^4.0.2",
+    "jest-sorted": "^1.0.15",
+    "supertest": "^7.0.0"
+  },
+  "scripts": {
+    "setup-dbs": "psql -f .db/setup.sql",
+    "test": "jest",
+    "seed": "node ./db",
+    "start": "node listen.js",
+    "seed-prod": "NODE_ENV=production npm run seed"
+  }
+}
