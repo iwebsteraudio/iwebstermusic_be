@@ -1,0 +1,24 @@
+{
+  "songs": [
+    {
+      "artist": "John Legend",
+      "title": "All Of Me",
+      "genre": "Pop",
+      "path": "../sounds/songs/AllOfMe.wav"
+    },
+    {
+      "artist": "The Thrills",
+      "title": "Big Sur",
+      "genre": "Indie",
+      "decade": "2000",
+      "path": "../sounds/songs/BigSur.wav"
+    },
+    {
+      "artist": "Simon and Garfunkel",
+      "title": "Bridge Over Troubled Water",
+      "genre": "Rock",
+      "decade": "1960",
+      "path": "../sounds/songs/BridgeOverTroubledWater.wav"
+    }
+  ]
+}
