@@ -1,8 +1,8 @@
 const { fetchSongs } = require("../models/songs-models");
 
-exports.sendSongData = (req, res, next) => {
+exports.sendSongsData = (req, res, next) => {
   fetchSongs()
-    .then((songData) => {
+  .then((songData) => {
       res.status(200).send({ songData });
     })
     .catch(next);

@@ -3,7 +3,7 @@ const ENV = process.env.NODE_ENV || "development";
 const config = {};
 
 require("dotenv").config({
-  path: `${__dirname}/../.enve.${ENV}`,
+  path: `${__dirname}/../.env.${ENV}`,
 });
 
 if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {

@@ -1,13 +1,16 @@
 const express = require("express");
 const app = express();
-const { sendUserData } = require("./controllers/users-controllers");
+const { sendUserData, postUser } = require("./controllers/users-controllers");
+const { sendSongsData, sendCustom404 } = require("./controllers/songs-controllers");
 const cors = require("cors");
 
 app.use(cors());
 
-app.get("api/users", sendUserData);
+app.get("/api/users", sendUserData);
 
 app.post("/api/users", postUser);
+
+app.get("/api/songs", sendSongsData);
 
 // need to be able to get song data, user data, post a user, post a song
 

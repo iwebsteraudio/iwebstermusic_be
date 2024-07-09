@@ -1,12 +1,16 @@
 module.exports = [
     {
         username: 'iwebsteraudio',
-        name: 'Ian Webster',
+        emailAddress: "iwebster.audio@gmail.com",
+        forename: 'Ian',
+        surname: 'Webster',
         status: 'admin'
     },
     {
         username: 'eddiethedog',
-        name: 'Edward Webster',
+        emailAddress: 'eddiepup@hotmail.com',
+        forename: 'Eddie',
+        surname: 'Webster',
         status: 'user'
     }
 ]

@@ -6,9 +6,9 @@
     "supertest": "^7.0.0"
   },
   "scripts": {
-    "setup-dbs": "psql -f .db/setup.sql",
+    "setup-dbs": "psql -f ./db/setup.sql",
     "test": "jest",
-    "seed": "node ./db",
+    "seed": "node ./db/seeds/seed.js",
     "start": "node listen.js",
     "seed-prod": "NODE_ENV=production npm run seed",
     "dev": "nodemon listen.js"

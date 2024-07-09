@@ -1,0 +1,35 @@
+{
+  "GET /api/": {
+    "description": "serves json representation of all the available endpoints of the api"
+  },
+  "GET /api/users": {
+    "description": "serves an array of all users",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "iwebsteraudio",
+          "emailAddress": "iwebster.audio@gmail.com",
+          "forename": "Ian",
+          "surname": "Webster",
+          "status": "admin"
+        }
+      ]
+    }
+  },
+  "GET /api/songs": {
+    "description": "serves an array of all songs",
+    "queries": [],
+    "exampleResponse": {
+      "songs": [
+        {
+          "artist": "John Legend",
+          "title": "All Of Me",
+          "decade": "2010",
+          "genre": "Pop",
+          "path": "../sounds/songs/AllOfMe.wav"
+        }
+      ]
+    }
+  }
+}
