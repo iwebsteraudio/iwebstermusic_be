@@ -11,7 +11,8 @@ const seed = ({ userData, songsData }) => {
       const usersTablePromise = db.query(
         `
             CREATE TABLE users (
-            username VARCHAR PRIMARY KEY NOT NULL,
+            user_id SERIAL PRIMARY KEY,
+            username VARCHAR NOT NULL,
             emailAddress VARCHAR NOT NULL,
             forename VARCHAR NOT NULL,
             surname VARCHAR NOT NULL,
@@ -21,8 +22,9 @@ const seed = ({ userData, songsData }) => {
 
       const songsTablePromise = db.query(`
             CREATE TABLE songs (
+            song_id SERIAL PRIMARY KEY,
             artist VARCHAR NOT NULL,
-            title VARCHAR PRIMARY KEY NOT NULL,
+            title VARCHAR NOT NULL,
             genre VARCHAR NOT NULL,
             decade VARCHAR NOT NULL,
             path VARCHAR
