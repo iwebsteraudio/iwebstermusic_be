@@ -1,13 +1,13 @@
 const format = require("pg-format");
-const db = require("../connection");
+const db = require("../connection.js");
 
 const seed = ({ userData, songsData }) => {
+
   return db
     .query(`DROP TABLE IF EXISTS songs;`)
+    .then(() => db.query(`DROP TABLE IF EXISTS users;`))
     .then(() => {
-      return db.query(`DROP TABLE IF EXISTS users;`);
-    })
-    .then(() => {
+
       const usersTablePromise = db.query(
         `
             CREATE TABLE users (
@@ -36,13 +36,15 @@ const seed = ({ userData, songsData }) => {
     .then(() => {
       const insertUsersQueryStr = format(
         `INSERT INTO users (username, emailAddress, forename, surname, status) VALUES %L;`,
-        userData.map(({ username, emailAddress, forename, surname, status }) => [
-          username,
-          emailAddress,
-          forename,
-          surname,
-          status,
-        ])
+        userData.map(
+          ({ username, emailAddress, forename, surname, status }) => [
+            username,
+            emailAddress,
+            forename,
+            surname,
+            status,
+          ]
+        )
       );
       return db.query(insertUsersQueryStr);
     })
@@ -58,6 +60,10 @@ const seed = ({ userData, songsData }) => {
         ])
       );
       return db.query(insertSongsQueryStr);
+    })
+    .catch(() => {
+      console.error("Error during seeding: ", error);
+      throw error;
     });
 };
 

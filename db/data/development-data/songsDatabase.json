@@ -168,13 +168,13 @@
     {
       "artist": "The Animals",
       "title": "Don't Let Me Be Misunderstood",
-      "genre": ["Rock'n'Roll", "Blues"],
+      "genre": "Rock",
       "decade": "1960"
     },
     {
       "artist": "Snow Patrol",
       "title": "Chasing Cars",
-      "genre": ["Indie", "Pop"],
+      "genre": "Indie",
       "decade": "2000"
     },
     {
@@ -186,7 +186,7 @@
     {
       "artist": "Green Day",
       "title": "Good Riddance (Time of Your Life)",
-      "genre": ["Punk", "Pop", "Folk"],
+      "genre": "Pop-Punk",
       "decade": "1990"
     },
     {
@@ -198,7 +198,7 @@
     {
       "artist": "Red Hot Chili Peppers",
       "title": "Can't Stop",
-      "genre": ["Alt Rock", "Funk"],
+      "genre": "Alt Rock",
       "decade": "2000"
     },
     {
@@ -222,7 +222,7 @@
     {
       "artist": "White Stripes",
       "title": "Hotel Yorba",
-      "genre": ["Alt Rock", "Folk", "Indie"],
+      "genre": "Indie",
       "decade": "2000"
     },
     {
@@ -258,13 +258,13 @@
     {
       "artist": "Coldplay",
       "title": "Yellow",
-      "genre": ["Indie", "Pop", "Folk"],
+      "genre": "Indie",
       "decade": "1990"
     },
     {
       "artist": "Ash",
       "title": "Girl From Mars",
-      "genre": ["Alt Rock", "Indie"],
+      "genre": "Alt Rock",
       "decade": "1990"
     },
     {
@@ -288,7 +288,7 @@
     {
       "artist": "Blink 182",
       "title": "All the Small Things",
-      "genre": "Punk",
+      "genre": "Pop-Punk",
       "decade": "1990"
     },
     {
@@ -312,7 +312,7 @@
     {
       "artist": "U2",
       "title": "With or Without You",
-      "genre": "Indie",
+      "genre": "Rock",
       "decade": "1980"
     },
     {
@@ -366,7 +366,7 @@
     {
       "artist": "The Lightning Seeds",
       "title": "Three Lions",
-      "genre": ["Indie", "Pop"],
+      "genre": "Indie",
       "decade": "1990"
     },
     {
@@ -378,14 +378,14 @@
     {
       "artist": "Amy Winehouse",
       "title": "Valerie",
-      "genre": ["Soul", "Pop", "Indie"],
+      "genre": "Soul",
       "decade": "2000"
     },
     {
       "artist": "Fatboy Slim",
       "title": "Praise You",
-      "genre": ["Pop", "Dance", "Big Beat"],
-      "decade": ""
+      "genre": "Dance",
+      "decade": "1990"
     },
     {
       "artist": "Ben E.King",
@@ -444,7 +444,7 @@
     {
       "artist": "John Denver",
       "title": "(Take Me Home) Country Roads",
-      "genre": ["Country", "Folk"],
+      "genre": "Country",
       "decade": "1970"
     },
     {
@@ -456,7 +456,7 @@
     {
       "artist": "Kings of Leon",
       "title": "Sex On Fire",
-      "genre": ["Indie", "Alt Rock"],
+      "genre": "Indie",
       "decade": "2000"
     },
     {
