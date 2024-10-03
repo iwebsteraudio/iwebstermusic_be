@@ -4,22 +4,19 @@
       "artist": "John Legend",
       "title": "All Of Me",
       "genre": "Pop",
-      "decade": "2010",
-      "path": "../sounds/songs/AllOfMe.wav"
+      "decade": "2010"
     },
     {
       "artist": "The Thrills",
       "title": "Big Sur",
       "genre": "Indie",
-      "decade": "2000",
-      "path": "../sounds/songs/BigSur.wav"
+      "decade": "2000"
     },
     {
       "artist": "Simon and Garfunkel",
       "title": "Bridge Over Troubled Water",
       "genre": "Rock",
-      "decade": "1960",
-      "path": "../sounds/songs/BridgeOverTroubledWater.wav"
+      "decade": "1960"
     },
     {
       "artist": "The Temptations",
@@ -31,7 +28,8 @@
       "artist": "The Killers",
       "title": "Read My Mind",
       "genre": "Indie",
-      "decade": "2000"
+      "decade": "2000",
+      "path": "/assets/songs/ReadMyMind.wav"
     },
     {
       "artist": "The Killers",
@@ -211,7 +209,8 @@
       "artist": "Red Hot Chili Peppers",
       "title": "Californication",
       "genre": "Alt Rock",
-      "decade": "1990"
+      "decade": "1990",
+      "path": "/assets/songs/Californication.wav"
     },
     {
       "artist": "Eagles",
@@ -475,13 +474,21 @@
       "artist": "Robbie Williams",
       "title": "Angels",
       "genre": "Pop",
-      "decade": "1990"
+      "decade": "1990",
+      "path": "/assets/songs/Angels.mp3"
     },
     {
       "artist": "Take That",
       "title": "Never Forget",
       "genre": "Pop",
       "decade": "1990"
+    },
+    {
+      "artist": "The Isley Brothers",
+      "title": "This Old Heart of Mine",
+      "genre": "Soul",
+      "decade": "1960",
+      "path": "/assets/songs/ThisOldHeart.wav"
     }
   ]
 }

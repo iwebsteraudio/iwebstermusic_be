@@ -5,21 +5,21 @@
       "title": "All Of Me",
       "genre": "Pop",
       "decade": "2010",
-      "path": "../sounds/songs/AllOfMe.wav"
+      "path": "../../assets/songs/AllOfMe.wav"
     },
     {
       "artist": "The Thrills",
       "title": "Big Sur",
       "genre": "Indie",
       "decade": "2000",
-      "path": "../sounds/songs/BigSur.wav"
+      "path": "../../assets/songs/BigSur.wav"
     },
     {
       "artist": "Simon and Garfunkel",
       "title": "Bridge Over Troubled Water",
       "genre": "Rock",
       "decade": "1960",
-      "path": "../sounds/songs/BridgeOverTroubledWater.wav"
+      "path": "../../assets/songs/BridgeOverTroubledWater.wav"
     }
   ]
 }
