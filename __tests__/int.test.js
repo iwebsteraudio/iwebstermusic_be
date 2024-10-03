@@ -37,3 +37,21 @@ describe("GET /api/", () => {
       });
   });
 });
+
+describe("POST /api/email", () => {
+  test("When sending a contact form to the back end, response with 200 and sends email", () => {
+    const formData = {
+      name: "Testy McTestface",
+      contactNumber: "07111111111",
+      contactEmail: "test@test.com",
+      date: "01-01-2060",
+      subject: "Wedding",
+      message: "This is a test email",
+    };
+    return request(app).post("/api/send-email")
+    .send(formData)
+    .expect(200)
+ 
+
+  });
+});
