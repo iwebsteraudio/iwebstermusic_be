@@ -1,6 +1,4 @@
-const { songsData } = require("../db/data/test-data");
 const { fetchUserData, postUserData } = require("../models/user-models");
-const { fetchSongsData } =  require("../models/songs-models")
 
 exports.sendUserData = (req, res, next) => {
   fetchUserData()
@@ -17,8 +15,3 @@ exports.postUser = (req, res, next) => {
     })
     .catch(next);
 };
-
-exports.sendSongsData = (req, res, next) => {
-  fetchSongsData()
-  .then((songsData))
-}

@@ -1,25 +1,16 @@
 require("dotenv").config({ path: "./.env.development" });
 
 const express = require("express");
-const bodyParser = require("body-parser");
-const emailRoutes = require("./routes/emailRoutes");
-
 const app = express();
+const bodyParser = require("body-parser");
 const cors = require("cors");
 
+const apiRouter = require("./routes/api-router")
+
 app.use(cors());
+app.use("/api", apiRouter);
 app.use(bodyParser.json());
-app.use("/api", emailRoutes);
 
-const { sendUserData, postUser } = require("./controllers/users-controllers");
-const {
-  sendSongsData,
-  sendCustom404,
-} = require("./controllers/songs-controllers");
-
-app.get("/api/users", sendUserData);
-app.post("/api/users", postUser);
-app.get("/api/songs", sendSongsData);
 
 app.use(express.json());
 app.all("*", sendCustom404);
