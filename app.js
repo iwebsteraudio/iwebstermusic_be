@@ -2,17 +2,15 @@ require("dotenv").config({ path: "./.env.development" });
 
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const apiRouter = require("./routes/api-router")
+const apiRouter = require("./routes/api-router");
+const { sendCustom404 } = require("./controllers/songs-controllers");
 
 app.use(cors());
-app.use("/api", apiRouter);
-app.use(bodyParser.json());
-
-
 app.use(express.json());
+app.use("/api", apiRouter);
+
 app.all("*", sendCustom404);
 
 app.use((err, req, res, next) => {
