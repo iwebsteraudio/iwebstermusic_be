@@ -48,9 +48,19 @@ describe("POST /api/send-email", () => {
       subject: "Wedding",
       message: "This is a test email",
     };
+    return request(app).post("/api/send-email").send(formData).expect(200);
+  });
+});
+
+describe("GET /api/mp3s", () => {
+  test("When requesting mp3's from s3, responds with a 200 an array of mp3 data objects", () => {
     return request(app)
-      .post("/api/send-email")
-      .send(formData)
-      .expect(200);
+      .get("/api/mp3s")
+      .expect(200)
+      .then(({ body }) => {
+        expect(Array.isArray(body.mp3Data)).toBe(true);
+        expect(body.mp3Data[0]).toHaveProperty("fileName", expect.any(String));
+        expect(body.mp3Data[0]).toHaveProperty("url", expect.any(String));
+      });
   });
 });
