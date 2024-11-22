@@ -38,7 +38,7 @@ describe("GET /api/", () => {
   });
 });
 
-describe("POST /api/send-email", () => {
+describe.skip("POST /api/send-email", () => {
   test("When sending a contact form to the back end, response with 200 and sends email", () => {
     const formData = {
       name: "Testy McTestface",

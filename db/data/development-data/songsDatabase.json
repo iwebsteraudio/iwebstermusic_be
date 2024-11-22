@@ -28,8 +28,7 @@
       "artist": "The Killers",
       "title": "Read My Mind",
       "genre": "Indie",
-      "decade": "2000",
-      "path": "/assets/songs/ReadMyMind.wav"
+      "decade": "2000"
     },
     {
       "artist": "The Killers",
@@ -209,8 +208,7 @@
       "artist": "Red Hot Chili Peppers",
       "title": "Californication",
       "genre": "Alt Rock",
-      "decade": "1990",
-      "path": "/assets/songs/Californication.wav"
+      "decade": "1990"
     },
     {
       "artist": "Eagles",
@@ -474,8 +472,7 @@
       "artist": "Robbie Williams",
       "title": "Angels",
       "genre": "Pop",
-      "decade": "1990",
-      "path": "/assets/songs/Angels.mp3"
+      "decade": "1990"
     },
     {
       "artist": "Take That",
@@ -487,8 +484,7 @@
       "artist": "The Isley Brothers",
       "title": "This Old Heart of Mine",
       "genre": "Soul",
-      "decade": "1960",
-      "path": "/assets/songs/ThisOldHeart.wav"
+      "decade": "1960"
     }
   ]
 }

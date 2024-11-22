@@ -23,6 +23,11 @@ exports.sendEmail = async (req, res) => {
     await transporter.sendMail(mailOptions);
     res.status(200).send({ message: "Email sent successfully" });
   } catch (error) {
-    res.status(500).send({ message: "Error sending email", error });
+    res
+      .status(500)
+      .send({
+        message: "Error sending email - please try again in a minute",
+        error,
+      });
   }
 };
