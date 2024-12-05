@@ -64,3 +64,63 @@ describe("GET /api/mp3s", () => {
       });
   });
 });
+
+describe("POST /api/songs", () => {
+  test("When sending a POST request to /songs, responds with 201 and returns the song object", () => {
+    return request(app)
+      .post("/api/songs")
+      .send({
+        title: "New Song",
+        artist: "New Artist",
+        genre: "Rock",
+        decade: "1980s",
+      })
+      .expect(201)
+      .then(({ body }) => {
+        const { songData } = body;
+        expect(songData).toEqual(
+          expect.objectContaining({
+            title: "New Song",
+            artist: "New Artist",
+            genre: "Rock",
+            decade: "1980s",
+          })
+        );
+      });
+  });
+
+  test("Should respond with 400 if any required field is missing", () => {
+    return request(app)
+      .post("/api/songs")
+      .send({
+        title: "Incomplete Song",
+        artist: "Artist Only",
+      })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Missing Required Fields");
+      });
+  });
+});
+
+describe("DELETE /api/songs/:id", () => {
+  test("When given a request to DELETE to /songs/:id, responds with 204 and deletes the song", () => {
+    return request(app)
+      .delete("/api/songs/1")
+      .expect(204)
+      .then(() => {
+        return request(app)
+          .get("/api/songs")
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.songData).not.toEqual(
+              expect.arrayContaining([
+                expect.objectContaining({
+                  song_id: 1,
+                }),
+              ])
+            );
+          });
+      });
+  });
+});

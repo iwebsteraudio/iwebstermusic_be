@@ -1,4 +1,4 @@
-const { fetchSongs, postSong } = require("../models/songs-models");
+const { fetchSongs, postSong, deleteSong } = require("../models/songs-models");
 
 exports.sendSongsData = (req, res, next) => {
   fetchSongs()
@@ -9,12 +9,26 @@ exports.sendSongsData = (req, res, next) => {
 };
 
 exports.postSongData = (req, res, next) => {
-  postSong()
-    .then((songData) => {
-      res.status(200).send({ songData });
+  postSong(req.body)
+    .then((newSong) => {
+      res.status(201).send({ songData: newSong });
     })
-    .catch(next);
+    .catch((err) => {
+      next(err);
+    });
 };
+
+exports.deleteSongById = (req, res, next) => {
+  const { song_id } = req.params;
+
+  deleteSong(song_id)
+    .then(()=>{
+      res.status(204).send()
+    })
+    .catch((err)=> {
+      next(err)
+    })
+}
 
 
 
