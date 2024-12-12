@@ -62,3 +62,18 @@ exports.deleteSong = (id) => {
       };
     });
 };
+
+exports.patchSong = (id, artist, title, genre, decade) => {
+  return db
+  .query(`UPDATE songs
+    SET
+       artist = $2,
+       title = $3,
+       genre = $4,
+       decade = $5
+    WHERE song_id = $1
+    RETURNING *;`, [id, artist, title, genre, decade])
+    .then(({rows}) => {
+      return rows[0];
+    })
+}
