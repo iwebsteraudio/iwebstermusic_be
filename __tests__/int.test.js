@@ -125,26 +125,53 @@ describe("DELETE /api/songs/:id", () => {
   });
 });
 
-describe("PATCH /api/songs/:id", ()=> {
-  test("When given a request to PATCH an existing song to /songs/:id, responds with a 202 Accepted and updates the song information",()=>{
+describe("PATCH /api/songs/:id", () => {
+  test("When given a valid request to update a song, responds with 202 and the updated song", () => {
     return request(app)
-    .patch("/api/songs/1")
-    .send({
-      artist: "The FakeNames",
-      title: "None of Me",
-      genre: "Jazz",
-      decade: "1950",
-    })
-    .expect(202)
-    .then(({ body }) => {
-      expect(body).toEqual(
-        expect.objectContaining({
-          artist: "The FakeNames",
-          title: "None of Me",
-          genre: "Jazz",
-          decade: "1950",
-        })
-      )
-    })
-  })
-})
+      .patch("/api/songs/1")
+      .send({
+        artist: "The FakeNames",
+        title: "None of Me",
+        genre: "Jazz",
+        decade: "1950",
+      })
+      .expect(202)
+      .then(({ body }) => {
+        expect(body).toEqual(
+          expect.objectContaining({
+            artist: "The FakeNames",
+            title: "None of Me",
+            genre: "Jazz",
+            decade: "1950",
+          })
+        );
+      });
+  });
+
+  test("responds with 404 Not Found when the song_id does not exist", () => {
+    return request(app)
+      .patch("/api/songs/99999")
+      .send({
+        artist: "NonExistent",
+        title: "NoSong",
+        genre: "Pop",
+        decade: "2000",
+      })
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Song not found");
+      });
+  });
+  test("responds with 400 Bad Request when required fields are missing", () => {
+    return request(app)
+      .patch("/api/songs/1")
+      .send({
+        artist: "IncompleteData", 
+      })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
+  });
+
+});

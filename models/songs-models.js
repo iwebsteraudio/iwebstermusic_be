@@ -65,15 +65,24 @@ exports.deleteSong = (id) => {
 
 exports.patchSong = (id, artist, title, genre, decade) => {
   return db
-  .query(`UPDATE songs
+    .query(
+      `UPDATE songs
     SET
        artist = $2,
        title = $3,
        genre = $4,
        decade = $5
     WHERE song_id = $1
-    RETURNING *;`, [id, artist, title, genre, decade])
-    .then(({rows}) => {
+    RETURNING *;`,
+      [id, artist, title, genre, decade]
+    )
+    .then(({ rows }) => {
+      if (rows.length === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: "Song not found",
+        });
+      }
       return rows[0];
     })
-}
+};
