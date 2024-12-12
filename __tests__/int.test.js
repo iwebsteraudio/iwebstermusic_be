@@ -124,3 +124,27 @@ describe("DELETE /api/songs/:id", () => {
       });
   });
 });
+
+describe("PATCH /api/songs/:id", ()=> {
+  test("When given a request to PATCH an existing song to /songs/:id, responds with a 202 Accepted and updates the song information",()=>{
+    return request(app)
+    .patch("/api/songs/1")
+    .send({
+      artist: "The FakeNames",
+      title: "None of Me",
+      genre: "Jazz",
+      decade: "1950",
+    })
+    .expect(202)
+    .then(({ body }) => {
+      expect(body).toEqual(
+        expect.objectContaining({
+          artist: "The FakeNames",
+          title: "None of Me",
+          genre: "Jazz",
+          decade: "1950",
+        })
+      )
+    })
+  })
+})
