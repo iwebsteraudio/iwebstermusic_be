@@ -1,9 +1,9 @@
 {
   "GET /api/": {
-    "description": "serves json representation of all the available endpoints of the api"
+    "description": "Serves JSON representation of all the available endpoints of the API"
   },
   "GET /api/users": {
-    "description": "serves an array of all users",
+    "description": "Serves an array of all users",
     "queries": [],
     "exampleResponse": {
       "users": [
@@ -18,7 +18,7 @@
     }
   },
   "GET /api/songs": {
-    "description": "serves an array of all songs",
+    "description": "Serves an array of all songs",
     "queries": [],
     "exampleResponse": {
       "songs": [
@@ -30,6 +30,78 @@
           "path": "../sounds/songs/AllOfMe.wav"
         }
       ]
+    }
+  },
+  "POST /api/songs": {
+    "description": "Adds a new song to the database",
+    "body": {
+      "title": "string",
+      "artist": "string",
+      "genre": "string",
+      "decade": "string"
+    },
+    "exampleResponse": {
+      "song": {
+        "title": "New Song",
+        "artist": "New Artist",
+        "genre": "Rock",
+        "decade": "1980s"
+      }
+    }
+  },
+  "DELETE /api/songs/:id": {
+    "description": "Deletes a song by its ID",
+    "params": {
+      "id": "integer"
+    },
+    "exampleResponse": {
+      "message": "Song deleted successfully"
+    }
+  },
+  "PATCH /api/songs/:id": {
+    "description": "Updates details of a specific song",
+    "params": {
+      "id": "integer"
+    },
+    "body": {
+      "artist": "string",
+      "title": "string",
+      "genre": "string",
+      "decade": "string"
+    },
+    "exampleResponse": {
+      "song": {
+        "artist": "The FakeNames",
+        "title": "None of Me",
+        "genre": "Jazz",
+        "decade": "1950"
+      }
+    }
+  },
+  "GET /api/mp3s": {
+    "description": "Fetches a list of MP3 files from S3",
+    "queries": [],
+    "exampleResponse": {
+      "mp3Data": [
+        {
+          "fileName": "example.mp3",
+          "url": "https://example-bucket.s3.region.amazonaws.com/example.mp3"
+        }
+      ]
+    }
+  },
+  "POST /api/send-email": {
+    "description": "Sends an email to a specified recipient",
+    "body": {
+      "name": "string",
+      "contactNumber": "string",
+      "contactEmail": "string",
+      "date": "string",
+      "subject": "string",
+      "message": "string"
+    },
+    "exampleResponse": {
+      "message": "Email sent successfully"
     }
   }
 }
