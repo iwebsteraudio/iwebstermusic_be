@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 exports.checkPassword = (req, res, next) => {
   const { password } = req.body;
 
-  const storedHashedPassword = process.env.ADMIN_PASSWORD;
+  const storedHashedPassword = process.env.ADMIN_PASS;
 
   if (!password) {
     return res.status(401).send({ msg: "Password is required." });
