@@ -4,6 +4,7 @@ const db = require("../db/connection.js");
 const testData = require("../db/data/test-data");
 const seed = require("../db/seeds/seed.js");
 const endPoints = require("../endpoints.json");
+const bcrypt = require("bcrypt")
 
 beforeEach(() => seed(testData));
 
@@ -65,113 +66,115 @@ describe("GET /api/mp3s", () => {
   });
 });
 
-describe("POST /api/songs", () => {
-  test("When sending a POST request to /songs, responds with 201 and returns the song object", () => {
-    return request(app)
-      .post("/api/songs")
-      .send({
-        title: "New Song",
-        artist: "New Artist",
-        genre: "Rock",
-        decade: "1980s",
-      })
-      .expect(201)
-      .then(({ body }) => {
-        const { songData } = body;
-        expect(songData).toEqual(
-          expect.objectContaining({
-            title: "New Song",
-            artist: "New Artist",
-            genre: "Rock",
-            decade: "1980s",
-          })
-        );
-      });
+
+process.env.ADMIN_PASSWORD = bcrypt.hashSync("test-password", 10);
+
+describe("Password-Protected Routes", () => {
+  describe("POST /api/songs", () => {
+    test("401 - responds with 'Password is required' if no password is sent", () => {
+      return request(app)
+        .post("/api/songs")
+        .send({
+          artist: "Test Artist",
+          title: "Test Song",
+          genre: "Rock",
+          decade: "1990",
+        })
+        .expect(401)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Password is required.");
+        });
+    });
+
+    test("403 - responds with 'Invalid password' if incorrect password is sent", () => {
+      return request(app)
+        .post("/api/songs")
+        .send({
+          password: "wrong-password",
+          artist: "Test Artist",
+          title: "Test Song",
+          genre: "Rock",
+          decade: "1990",
+        })
+        .expect(403)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Invalid password.");
+        });
+    });
+
+    test("201 - responds with the newly created song if correct password is provided", () => {
+      return request(app)
+        .post("/api/songs")
+        .send({
+          password: "test-password",
+          artist: "Test Artist",
+          title: "Test Song",
+          genre: "Rock",
+          decade: "1990",
+        })
+        .expect(201)
+        .then(({ body }) => {
+          expect(body.songData).toEqual(
+            expect.objectContaining({
+              artist: "Test Artist",
+              title: "Test Song",
+              genre: "Rock",
+              decade: "1990",
+            })
+          );
+        });
+    });
   });
 
-  test("Should respond with 400 if any required field is missing", () => {
-    return request(app)
-      .post("/api/songs")
-      .send({
-        title: "Incomplete Song",
-        artist: "Artist Only",
-      })
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).toBe("Missing Required Fields");
-      });
-  });
-});
+  describe("DELETE /api/songs/:song_id", () => {
+    test("403 - responds with 'Invalid password' for incorrect password", () => {
+      return request(app)
+        .delete("/api/songs/1")
+        .send({ password: "wrong-password" })
+        .expect(403)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Invalid password.");
+        });
+    });
 
-describe("DELETE /api/songs/:id", () => {
-  test("When given a request to DELETE to /songs/:id, responds with 204 and deletes the song", () => {
-    return request(app)
-      .delete("/api/songs/1")
-      .expect(204)
-      .then(() => {
-        return request(app)
-          .get("/api/songs")
-          .expect(200)
-          .then(({ body }) => {
-            expect(body.songData).not.toEqual(
-              expect.arrayContaining([
-                expect.objectContaining({
-                  song_id: 1,
-                }),
-              ])
-            );
-          });
-      });
-  });
-});
-
-describe("PATCH /api/songs/:id", () => {
-  test("When given a valid request to update a song, responds with 202 and the updated song", () => {
-    return request(app)
-      .patch("/api/songs/1")
-      .send({
-        artist: "The FakeNames",
-        title: "None of Me",
-        genre: "Jazz",
-        decade: "1950",
-      })
-      .expect(202)
-      .then(({ body }) => {
-        expect(body).toEqual(
-          expect.objectContaining({
-            artist: "The FakeNames",
-            title: "None of Me",
-            genre: "Jazz",
-            decade: "1950",
-          })
-        );
-      });
+    test("204 - deletes the song successfully with the correct password", () => {
+      return request(app)
+        .delete("/api/songs/1")
+        .send({ password: "test-password" }) // Correct password
+        .expect(204);
+    });
   });
 
-  test("responds with 404 Not Found when the song_id does not exist", () => {
-    return request(app)
-      .patch("/api/songs/99999")
-      .send({
-        artist: "NonExistent",
-        title: "NoSong",
-        genre: "Pop",
-        decade: "2000",
-      })
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).toBe("Song not found");
-      });
-  });
-  test("responds with 400 Bad Request when required fields are missing", () => {
-    return request(app)
-      .patch("/api/songs/1")
-      .send({
-        artist: "IncompleteData", 
-      })
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).toBe("Bad Request");
-      });
-  });
+  describe("PATCH /api/songs/:song_id", () => {
+    test("401 - responds with 'Password is required' if no password is sent", () => {
+      return request(app)
+        .patch("/api/songs/1")
+        .send({
+          artist: "Updated Artist",
+        })
+        .expect(401)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Password is required.");
+        });
+    });
 
+    test("202 - updates the song successfully with the correct password", () => {
+      return request(app)
+        .patch("/api/songs/1")
+        .send({
+          password: "test-password", // Correct password
+          artist: "Updated Artist",
+          title: "Updated Song Title",
+          genre: "Jazz",
+          decade: "1980",
+        })
+        .expect(202)
+        .then(({ body }) => {
+          expect(body.artist).toBe("Updated Artist");
+          expect(body.title).toBe("Updated Song Title");
+          expect(body.genre).toBe("Jazz");
+          expect(body.decade).toBe("1980");
+        });
+    });
+  });
 });

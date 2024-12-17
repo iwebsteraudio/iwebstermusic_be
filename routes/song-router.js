@@ -1,5 +1,6 @@
 const express = require("express");
 const songRouter = express.Router();
+
 const {
   sendSongsData,
   postSongData,
@@ -7,9 +8,14 @@ const {
   patchSongById,
 } = require("../controllers/songs-controllers");
 
+const { checkPassword } = require("../middleware/passwordMiddleware");
+
 songRouter.route("/").get(sendSongsData);
-songRouter.route("/").post(postSongData);
-songRouter.route("/:song_id").delete(deleteSongById);
-songRouter.route("/:song_id").patch(patchSongById);
+
+songRouter.route("/").post(checkPassword, postSongData);
+
+songRouter.route("/:song_id").delete(checkPassword, deleteSongById);
+
+songRouter.route("/:song_id").patch(checkPassword, patchSongById);
 
 module.exports = songRouter;
