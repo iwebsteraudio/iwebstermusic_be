@@ -1,16 +1,16 @@
 const bcrypt = require("bcrypt");
 
 exports.checkPassword = (req, res, next) => {
-  const { password } = req.body;
+  const { authorization } = req.headers;
 
   const storedHashedPassword = process.env.ADMIN_PASS;
 
-  if (!password) {
+  if (!authorization) {
     return res.status(401).send({ msg: "Password is required." });
   }
 
   bcrypt
-    .compare(password, storedHashedPassword)
+    .compare(authorization, storedHashedPassword)
     .then((isMatch) => {
       if (!isMatch) {
         return res.status(403).send({ msg: "Invalid password." });

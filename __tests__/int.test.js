@@ -67,7 +67,7 @@ describe("GET /api/mp3s", () => {
 });
 
 
-process.env.ADMIN_PASSWORD = bcrypt.hashSync("test-password", 10);
+process.env.ADMIN_PASS = bcrypt.hashSync("test-password", 10);
 
 describe("Password-Protected Routes", () => {
   describe("POST /api/songs", () => {
@@ -89,8 +89,8 @@ describe("Password-Protected Routes", () => {
     test("403 - responds with 'Invalid password' if incorrect password is sent", () => {
       return request(app)
         .post("/api/songs")
+        .set("Authorization", "wrong-password")
         .send({
-          password: "wrong-password",
           artist: "Test Artist",
           title: "Test Song",
           genre: "Rock",
@@ -105,8 +105,8 @@ describe("Password-Protected Routes", () => {
     test("201 - responds with the newly created song if correct password is provided", () => {
       return request(app)
         .post("/api/songs")
+        .set("Authorization", "test-password")
         .send({
-          password: "test-password",
           artist: "Test Artist",
           title: "Test Song",
           genre: "Rock",
@@ -130,7 +130,7 @@ describe("Password-Protected Routes", () => {
     test("403 - responds with 'Invalid password' for incorrect password", () => {
       return request(app)
         .delete("/api/songs/1")
-        .send({ password: "wrong-password" })
+        .set("Authorization", "wrong-password") // Password in the header
         .expect(403)
         .then(({ body }) => {
           expect(body.msg).toBe("Invalid password.");
@@ -140,7 +140,7 @@ describe("Password-Protected Routes", () => {
     test("204 - deletes the song successfully with the correct password", () => {
       return request(app)
         .delete("/api/songs/1")
-        .send({ password: "test-password" }) // Correct password
+        .set("Authorization", "test-password") // Correct password in the header
         .expect(204);
     });
   });
@@ -161,8 +161,8 @@ describe("Password-Protected Routes", () => {
     test("202 - updates the song successfully with the correct password", () => {
       return request(app)
         .patch("/api/songs/1")
+        .set("Authorization", "test-password")
         .send({
-          password: "test-password", // Correct password
           artist: "Updated Artist",
           title: "Updated Song Title",
           genre: "Jazz",
