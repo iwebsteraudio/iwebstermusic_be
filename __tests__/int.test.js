@@ -4,7 +4,7 @@ const db = require("../db/connection.js");
 const testData = require("../db/data/test-data");
 const seed = require("../db/seeds/seed.js");
 const endPoints = require("../endpoints.json");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 
 beforeEach(() => seed(testData));
 
@@ -40,7 +40,7 @@ describe("GET /api/", () => {
 });
 
 describe.skip("POST /api/send-email", () => {
-  test("When sending a contact form to the back end, response with 200 and sends email", () => {
+  test("When sending a contact form to the back end, responds with 200 and sends email", () => {
     const formData = {
       name: "Testy McTestface",
       contactNumber: "07111111111",
@@ -66,8 +66,91 @@ describe("GET /api/mp3s", () => {
   });
 });
 
-
 process.env.ADMIN_PASS = bcrypt.hashSync("test-password", 10);
+
+describe.only("POST /api/work-logs", () => {
+  test.only("201 - creates a new work log when correct data and password are provided", () => {
+    const workLogData = {
+      category: "Lesson Prep",
+      description: "Prepared material for John’s lesson",
+      date: "2025-07-14",
+      startTime: "10:00",
+      endTime: "11:30",
+      notes: "Included some jazz reharm ideas",
+      paid: false,
+    };
+
+    return request(app)
+      .post("/api/work-logs")
+      .set("Authorization", "test-password")
+      .send(workLogData)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.workLog).toEqual(
+          expect.objectContaining({
+            category: "Lesson Prep",
+            description: "Prepared material for John’s lesson",
+            date: "2025-07-14",
+            startTime: "10:00",
+            endTime: "11:30",
+            notes: "Included some jazz reharm ideas",
+            paid: false,
+          })
+        );
+      });
+  });
+
+  test("400 - responds with 'Missing required field' if category is not provided", () => {
+    return request(app)
+      .post("/api/work-logs")
+      .set("Authorization", "test-password")
+      .send({
+        description: "Forgot category",
+        date: "2025-07-14",
+        startTime: "10:00",
+        endTime: "11:30",
+      })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toMatch(/category/i);
+      });
+  });
+
+  test("401 - responds with 'Password is required' if no password is sent", () => {
+    return request(app)
+      .post("/api/work-logs")
+      .send({
+        category: "Lesson Prep",
+        description: "No password",
+        date: "2025-07-14",
+        startTime: "10:00",
+        endTime: "11:30",
+        paid: true,
+      })
+      .expect(401)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Password is required.");
+      });
+  });
+
+  test("403 - responds with 'Invalid password' if incorrect password is sent", () => {
+    return request(app)
+      .post("/api/work-logs")
+      .set("Authorization", "wrong-password")
+      .send({
+        category: "Lesson Prep",
+        description: "Wrong password",
+        date: "2025-07-14",
+        startTime: "10:00",
+        endTime: "11:30",
+        paid: false,
+      })
+      .expect(403)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid password.");
+      });
+  });
+});
 
 describe("Password-Protected Routes", () => {
   describe("POST /api/songs", () => {
